@@ -1,0 +1,18 @@
+---
+driver:
+  name: vagrant
+# driver_config:
+#   http_proxy: http://pascal:80
+#   https_proxy: http://pascal:80
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos-6.5
+
+suites:
+  - name: default
+    run_list:
+      - recipe[oracle::default]
+    attributes:
