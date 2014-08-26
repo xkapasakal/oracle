@@ -1,0 +1,2 @@
+default['oracle']['remote_installation_file_1'] = 'http://10.0.2.2:8000/p10404530_112030_Linux-x86-64_1of7.zip'
+default['oracle']['remote_installation_file_2'] = 'http://10.0.2.2:8000/p10404530_112030_Linux-x86-64_2of7.zip'

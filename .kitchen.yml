@@ -1,6 +1,8 @@
 ---
 driver:
   name: vagrant
+  customize:
+    memory: 1515
 # driver_config:
 #   http_proxy: http://pascal:80
 #   https_proxy: http://pascal:80
