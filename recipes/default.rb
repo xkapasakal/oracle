@@ -19,8 +19,12 @@ yum_repository 'ol6_latest' do
   action :create
 end
 
-remote_file "/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle" do
-  source "https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6"
+# remote_file "/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle" do
+#   source "https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6"
+# end
+
+cookbook_file "RPM-GPG-KEY-oracle" do
+  path "/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle"
 end
 
 yum_package "oracle-rdbms-server-11gR2-preinstall" do
