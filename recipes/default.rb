@@ -7,7 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
-unless ::Dir.exists?("/u01/app/oraInventory")
+unless ::Dir.exists?("/u01/app/oracle/product/11.2.0/dbhome_1/bin")
+  memory_in_kb = `grep MemTotal: /proc/meminfo | awk -F':' '{print $2}' | sed 's/^ *//;s/ *$//' | awk -F' ' '{print $1}'`
+  Chef::Application.fatal!("Didn't expect the Spanish Inquistion", 42) if memory_in_kb < 2000000
+
   include_recipe 'yum'
   include_recipe 'yum-epel'
 
@@ -114,6 +117,34 @@ unless ::Dir.exists?("/u01/app/oraInventory")
   execute "install oracle" do
     cwd "/home/oracle/database"
     user "oracle"
-    command "./runInstaller -silent -noconfig -showProgress -force -responseFile  /home/oracle/db.rsp"
+    command "./runInstaller -silent -noconfig -showProgress -force -responseFile /home/oracle/db.rsp"
+  end
+
+  execute "after install script" do
+    user "oracle"
+    command "/u01/app/oracle/product/11.2.0/dbhome_1/cfgtoollogs/configToolAllCommands"
+  end
+
+  execute "create database orcl" do
+    user "oracle"
+    command "dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbName orcl -sid orcl -sysPassword password -systemPassword password -emConfiguration NONE -datafileDestination /u01/app/oracle/oradata -recoveryAreaDestination /u01/app/oracle/orafra -storageType FS -characterSet AL32UTF8 -nationalCharacterSet UTF8 -registerWithDirService false -listeners LISTENER_1521;"
+  end
+
+  cookbook_file "etc_oratab" do
+    owner "vagrant"
+    group "vagrant"
+    path "/etc/oratab"
+  end
+
+  cookbook_file "etc_rc.d_init.d_oracle" do
+    owner "vagrant"
+    group "vagrant"
+    mode 00755
+    path "/etc/rc.d/init.d/oracle"
+  end
+
+  execute "after install script" do
+    user "vagrant"
+    command "chkconfig --add oracle" #sudo!
   end
 end

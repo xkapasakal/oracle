@@ -1,0 +1,17 @@
+#!/bin/sh
+# chkconfig: 345 99 10
+ 
+ORA_OWNER=oracle
+ 
+case "$1" in
+    'start')
+        su - $ORA_OWNER -c "lsnrctl start LISTENER_ORACLEDB1" 
+        su - $ORA_OWNER -c "dbstart" 
+        su - $ORA_OWNER -c "emctl start dbconsole" 
+    ;;
+    'stop')
+        su - $ORA_OWNER -c "lsnrctl stop LISTENER_ORACLEDB1" 
+        su - $ORA_OWNER -c "emctl stop dbconsole" 
+        su - $ORA_OWNER -c "dbshut" 
+    ;;
+esac
