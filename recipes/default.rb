@@ -23,7 +23,7 @@ end
 #   source "https://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6"
 # end
 
-cookbook_file "RPM-GPG-KEY-oracle" do
+cookbook_file "RPM-GPG-KEY-oracle-ol6" do
   path "/etc/pki/rpm-gpg/RPM-GPG-KEY-oracle"
 end
 
