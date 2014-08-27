@@ -9,7 +9,7 @@
 
 unless ::Dir.exists?("/u01/app/oracle/product/11.2.0/dbhome_1/bin")
   memory_in_kb = `grep MemTotal: /proc/meminfo | awk -F':' '{print $2}' | sed 's/^ *//;s/ *$//' | awk -F' ' '{print $1}'`
-  Chef::Application.fatal!("Didn't expect the Spanish Inquistion", 42) if memory_in_kb < 2000000
+  Chef::Application.fatal!("Memory must be > 2G", 42) if memory_in_kb < 2000000
 
   include_recipe 'yum'
   include_recipe 'yum-epel'
