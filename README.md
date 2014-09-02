@@ -1,10 +1,10 @@
 # oracle-cookbook
 
-TODO: Enter the cookbook description here.
+Installs Oracle Database 11g Release 2. Enterprise Edition (11.2.0.3.0).
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+- CentOS 6.5
 
 ## Attributes
 
@@ -24,6 +24,7 @@ TODO: List your supported platforms.
 </table>
 
 ## Usage
+Approximate time = (50m22.51s)
 
 ### oracle::default
 

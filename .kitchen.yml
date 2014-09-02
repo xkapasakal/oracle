@@ -2,10 +2,12 @@
 driver:
   name: vagrant
   customize:
-    memory: 1515
-# driver_config:
-#   http_proxy: http://pascal:80
-#   https_proxy: http://pascal:80
+    memory: 2048
+  vagrantfile_erb: Vagrantfile.erb
+  proxy:
+    http: "http://pascal:80/"
+    https: "http://pascal:80/"
+    no_proxy: "localhost,127.0.0.1,.example.com"
 
 provisioner:
   name: chef_solo
@@ -18,3 +20,9 @@ suites:
     run_list:
       - recipe[oracle::default]
     attributes:
+      chef_client:
+        config:
+          log_level: ":debug"
+      oracle:
+        remote_installation_file_1: "http://git-1.athens.intrasoft-intl.private/p10404530_112030_Linux-x86-64_1of7.zip"
+        remote_installation_file_2: "http://git-1.athens.intrasoft-intl.private/p10404530_112030_Linux-x86-64_2of7.zip"
